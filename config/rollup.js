@@ -1,15 +1,15 @@
 var pkg = require('../package.json');
 
-// 兼容 base 和 @jsmini/base，@jsmini/base 替换为 jsmini_base
+// 兼容 querystring 和 @jsmini/querystring，@jsmini/querystring 替换为 jsmini_querystring
 var name = pkg.name.replace('@', '').replace(/\//g, '_');
 var version = pkg.version;
 
 var banner = 
 `/*!
- * base ${version} (https://github.com/jsmini/base)
- * API https://github.com/jsmini/base/blob/master/doc/api.md
+ * querystring ${version} (https://github.com/jsmini/querystring)
+ * API https://github.com/jsmini/querystring/blob/master/doc/api.md
  * Copyright 2017-${(new Date).getFullYear()} jsmini. All Rights Reserved
- * Licensed under MIT (https://github.com/jsmini/base/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/jsmini/querystring/blob/master/LICENSE)
  */
 `;
 
