@@ -39,7 +39,7 @@ export function parse(str, option = {}) {
 }
 
 function toString(x) {
-    return Object.protype.toString.call(x);
+    return Object.prototype.toString.call(x);
 
 }
 function hasOwnProp(obj, prop) {
