@@ -3,7 +3,7 @@
 [![](https://img.shields.io/badge/Powered%20by-jslib%20querystring-brightgreen.svg)](https://github.com/yanhaijing/jslib-querystring)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jsmini/querystring/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/jsmini/querystring.svg?branch=master)](https://travis-ci.org/jsmini/querystring)
-[![npm](https://img.shields.io/badge/npm-0.2.0-orange.svg)](https://www.npmjs.com/package/@jsmini/querystring)
+[![npm](https://img.shields.io/badge/npm-0.3.0-orange.svg)](https://www.npmjs.com/package/@jsmini/querystring)
 [![NPM downloads](http://img.shields.io/npm/dm/@jsmini/querystring.svg?style=flat-square)](http://www.npmtrends.com/@jsmini/querystring)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/jsmini/querystring.svg)](http://isitmaintained.com/project/jsmini/querystring "Percentage of issues still open")
 
