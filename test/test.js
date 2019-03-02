@@ -66,5 +66,21 @@ describe('单元测试', function() {
             var a = stringify({ a: '='}, { encode: function (x) {return x} })
             expect(a).to.eql('a==');
         })
+
+        it('option.filter', function() {
+            var a = stringify({ a: null})
+            expect(a).to.eql('a=');
+
+            var a = stringify({ a: null}, { filter: function (x) {return x !== null} })
+            expect(a).to.eql('');
+        })
+
+        it('option.convert', function() {
+            var a = stringify({ a: '='})
+            expect(a).to.eql('a=%3D');
+
+            var a = stringify({ a: '='}, { encode: function (x) {return x} })
+            expect(a).to.eql('a==');
+        })
     });
 });
