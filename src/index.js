@@ -67,6 +67,9 @@ export function stringify(obj, option = {}) {
         sep: '&',
         eq: '=',
         encode: encodeURIComponent,
+        filter: (v, k) => true,
+        // undefined or null > ''
+        convert: (v, k) => typeof v === 'undefined' || v === null ? '' : v,
     }, option);
 
     let res = '';
@@ -74,8 +77,9 @@ export function stringify(obj, option = {}) {
     const isEncode = type(opt.encode) === 'function';
 
     for (let key in obj) {
-        if (hasOwnProp(obj, key)) {
-            const str = isPrimitive(obj[key]) ? String(obj[key]) : toString(obj[key]);
+        if (hasOwnProp(obj, key) && opt.filter(obj[key], key)) {
+            const val = opt.convert(obj[key], key);
+            const str = isPrimitive(val) ? String(val) : toString(val);
             
             const k = isEncode ? opt.encode(key) : key;
             const v = isEncode ? opt.encode(str) : str;
