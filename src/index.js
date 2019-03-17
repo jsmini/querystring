@@ -12,6 +12,7 @@ export function parse(str, option = {}) {
         eq: '=',
         ignoreQueryPrefix: false,
         decode: decodeURIComponent,
+        convert: (v, k) => v,
     }, option);
 
     // 处理?，?a=b
@@ -32,7 +33,7 @@ export function parse(str, option = {}) {
         const k = isDecode ? opt.decode(arr2[0]) : arr2[0];
         const v = isDecode ? opt.decode(arr2[1]) : arr2[1];
 
-        res[k] = v;
+        res[k] = opt.convert(v, k);
     }
 
     return res;

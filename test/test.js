@@ -39,6 +39,14 @@ describe('单元测试', function() {
             var a = parse('a=%3D', { decode: function (x) {return x} })
             expect(a).to.eql({ a: '%3D'});
         })
+
+        it('option.convert', function() {
+            var a = parse('a=1&b=2')
+            expect(a).to.eql({ a: 1, b: 2 });
+
+            var a = parse('a=1&b=2', { convert: function (x) {return +x + 1} })
+            expect(a).to.eql({ a: 2, b: 3 });
+        })
     });
 
     describe('stringify', function() {

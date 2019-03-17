@@ -12,12 +12,20 @@ url参数处理库
 - param {string} [option.eq='='] 参数赋值符
 - param {boolean} [option.ignoreQueryPrefix=false] 忽略参数中的`?`
 - param {function} [option.decode=decodeURIComponent] 对参数进行解码的函数
+- param {function} [option.convert=(v, k)] 对数据进行转换
 - return {object} 键值对象
 
 举个例子
 
 ```js
+parse('a=1&b=2') // 
+```
+
+convert用来对数据转换
+
+```js
 parse('a=1&b=2') // { a: 1, b: 2 }
+parse('a=1&b=2', {convert: v => +v + 1 }) // { a: 2, b: 3 }
 ```
 
 ## stringify
@@ -47,7 +55,7 @@ stringify({ a: null}) // 'a='
 stringify({ a: null}, {filter: v => v !== null }) // ''
 ```
 
-convert用来对数据过滤，默认行为是将undefined和null转换为空字符
+convert用来对数据转换，默认行为是将undefined和null转换为空字符
 
 ```js
 stringify({ a: null}) // 'a='
