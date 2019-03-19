@@ -110,7 +110,11 @@ stringify({ a: { b: 1 } }, {convert: v => JSON.stringify(v) }) // 'a="{"b":1}"'
 parse({ a: ['1', '2', '3'], b: '1' }) // 'a=3&b=1'
 parse({ a: ['1', '2', '3'], b: '1' }, {
     reduce: (prev, v, k) => {
-        prev.push({ k, v });
+        if (Array.isArray(v)) {
+            prev.concat(v.map(item => ({ k, v: item })))
+        } else {
+            prev.push({ k, v });
+        }
 
         return prev;
     }
