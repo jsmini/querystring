@@ -35,7 +35,7 @@ convert用来对数据转换
 ```js
 // 将 '1' 转换为 1
 parse('a=1&b=2') // { a: '1', b: '2' }
-parse('a=1&b=2', {convert: v => isNaN(+v) ? v : +v }) // { a: 2, b: 3 }
+parse('a=1&b=2', {convert: v => isNaN(+v) ? v : +v }) // { a: 1, b: 2 }
 
 // 将 'null' 转换为 null
 parse('a=null') // { a: 'null' }
