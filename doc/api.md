@@ -107,8 +107,8 @@ stringify({ a: { b: 1 } }, {convert: v => JSON.stringify(v) }) // 'a="{"b":1}"'
 注意：reduce内的数据将不再执行`option.convert`转换
 
 ```js
-parse({ a: ['1', '2', '3'], b: '1' }) // 'a=3&b=1'
-parse({ a: ['1', '2', '3'], b: '1' }, {
+stringify({ a: ['1', '2', '3'], b: '1' }) // 'a=3&b=1'
+stringify({ a: ['1', '2', '3'], b: '1' }, {
     reduce: (prev, v, k) => {
         if (Array.isArray(v)) {
             prev.concat(v.map(item => ({ k, v: item })))
