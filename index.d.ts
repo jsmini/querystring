@@ -4,7 +4,7 @@ interface parseOption {
     sep?: string;
     eq?: string;
     ignoreQueryPrefix?: boolean;
-    decode?: (x: string) => string;
+    decode?: (x: string, isKey?: boolean) => string;
     filter?: (v: string, k?: string) => boolean;
     convert?: (v: string, k?: string) => any;
     reduce?: (prev: object, v: string, k?: string) => object;
@@ -13,7 +13,8 @@ interface parseOption {
 interface stringifyOption {
     sep?: string;
     eq?: string;
-    encode?: (x: string) => string;
+    addQueryPrefix?: boolean;
+    encode?: (x: string, isKey?: boolean) => string;
     filter?: (v: any, k?: string) => boolean;
     convert?: (v: any, k?: string) => any;
     reduce?: (prev: object[], v: any, k?: string) => object[];

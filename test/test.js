@@ -38,6 +38,9 @@ describe('单元测试', function() {
 
             var a = parse('a=%3D', { decode: function (x) {return x} })
             expect(a).to.eql({ a: '%3D'});
+
+            var a = parse('a=%3D', { decode: function (x, isKey) {return isKey ? 1 : 2} })
+            expect(a).to.eql({ 1: 2 });
         })
 
         it('option.filter', function() {
@@ -81,6 +84,14 @@ describe('单元测试', function() {
             expect(a).to.eql('a=1&b=2&c=3&d=4');
         });
 
+        it('addQueryPrefix', function() {
+            var a = stringify({ a: '1'});
+            expect(a).to.eql('a=1');
+
+            var a = stringify({ a: '1'}, { addQueryPrefix: true });
+            expect(a).to.eql('?a=1');
+        });
+
         it('option', function() {
             var a = stringify({ a: '1', b: '2', c: '3'}, {sep: '+', eq: ':'});
             expect(a).to.eql('a:1+b:2+c:3');
@@ -92,6 +103,9 @@ describe('单元测试', function() {
 
             var a = stringify({ a: '='}, { encode: function (x) {return x} })
             expect(a).to.eql('a==');
+
+            var a = stringify({ a: '='}, { encode: function (x, isKey) {return isKey ? 1 : 2} })
+            expect(a).to.eql('1=2');
         })
 
         it('option.filter', function() {

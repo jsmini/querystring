@@ -1,5 +1,11 @@
 # 变更日志
 
+## 0.6.0 / 2019-3-19
+
+- feat: parse的decode增加isKey参数
+- feat: stringify的encode增加isKey参数
+- feat: stringify新增addQueryPrefix参数
+
 ## 0.5.0 / 2019-3-19
 
 - feat: parse新增filter和reduce参数

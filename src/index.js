@@ -11,7 +11,7 @@ export function parse(str, option = {}) {
         sep: '&',
         eq: '=',
         ignoreQueryPrefix: false,
-        decode: decodeURIComponent,
+        decode: (x, iskey) => decodeURIComponent(x),
         filter: (v, k) => true,
         convert: (v, k) => v,
         reduce: false, // (prev, v, k) => prev
@@ -31,7 +31,7 @@ export function parse(str, option = {}) {
 
     for (let i = 0; i < arr.length; i++) {
         const arr2 = arr[i].split(opt.eq);
-        const k = isDecode ? opt.decode(arr2[0]) : arr2[0];
+        const k = isDecode ? opt.decode(arr2[0], true) : arr2[0];
         const v = isDecode ? opt.decode(arr2[1]) : arr2[1];
 
         if (opt.filter(v, k)) {
@@ -58,7 +58,8 @@ export function stringify(obj, option = {}) {
     const opt = extend({
         sep: '&',
         eq: '=',
-        encode: encodeURIComponent,
+        addQueryPrefix: false,
+        encode: (x, isKey) => encodeURIComponent(x),
         filter: (v, k) => true,
         // undefined or null > ''
         convert: (v, k) => typeof v === 'undefined' || v === null ? '' : v,
@@ -81,9 +82,9 @@ export function stringify(obj, option = {}) {
 
     let str = '';
     for (let i = 0; i < res.length; i++) {
-        const k = isEncode ? opt.encode(res[i].k) : res[i].k;
+        const k = isEncode ? opt.encode(res[i].k, true) : res[i].k;
         const v = isEncode ? opt.encode(res[i].v) : res[i].v;
         str = str + (str === '' ? '' : opt.sep) + k + opt.eq + v;
     }
-    return str;
+    return opt.addQueryPrefix ? '?' + str : str;
 }

@@ -11,7 +11,7 @@ url参数处理库
 - param {string} [option.sep='&'] 参数分隔符
 - param {string} [option.eq='='] 参数赋值符
 - param {boolean} [option.ignoreQueryPrefix=false] 忽略参数中的`?`
-- param {function} [option.decode=decodeURIComponent] 对参数进行解码的函数
+- param {function} [option.decode=(x, isKey)] 对参数进行解码的函数
 - param {function} [option.filter=(v, k) => true] 对数据进行过滤
 - param {function} [option.convert=(v, k)] 对数据进行转换
 - param {function} [option.reduce=(prev, v, k)] 自定义数据处理流程
@@ -70,7 +70,8 @@ parse('a=1&a=2&a=3', {
 - param {object} [option] 可选参数
 - param {string} [option.sep='&'] 参数分隔符
 - param {string} [option.eq='='] 参数赋值符
-- param {function} [option.encode=encodeURIComponent] 对参数进行编码的函数
+- param {boolean} [option.addQueryPrefix=false] 是否在前面添加?
+- param {function} [option.encode=(x, isKey)] 对参数进行编码的函数
 - param {function} [option.filter=(v, k) => true] 对数据进行过滤
 - param {function} [option.convert=(v, k) => /*undefined null -> ''*/] 对数据进行转换
 - param {function} [option.reduce=(prev, v, k)] 自定义数据处理流程
