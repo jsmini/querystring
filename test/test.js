@@ -40,12 +40,31 @@ describe('单元测试', function() {
             expect(a).to.eql({ a: '%3D'});
         })
 
+        it('option.filter', function() {
+            var a = parse('a=null')
+            expect(a).to.eql({ a: 'null'});
+
+            var a = parse('a=null', { filter: function (x) {return x !== 'null'} })
+            expect(a).to.eql({ });
+        })
+
         it('option.convert', function() {
             var a = parse('a=1&b=2')
             expect(a).to.eql({ a: 1, b: 2 });
 
             var a = parse('a=1&b=2', { convert: function (x) {return +x + 1} })
             expect(a).to.eql({ a: 2, b: 3 });
+        })
+
+        it('option.reduce', function() {
+            var a = parse('a=1&a=2')
+            expect(a).to.eql({ a: 2 });
+
+            var a = parse('a=1&a=2', { reduce: function (prev, v, k) {
+                prev[k] = k in prev ? [].concat(prev[k], v) : v;
+                return prev;
+            } })
+            expect(a).to.eql({ a: [1, 2] });
         })
     });
 
@@ -89,6 +108,19 @@ describe('单元测试', function() {
 
             var a = stringify({ a: null}, { convert: function (x) {return x} })
             expect(a).to.eql('a=null');
+        })
+
+        it('option.reduce', function() {
+            var a = stringify({ a: [1, 2] })
+            expect(a).to.eql('a=1%2C2');
+
+            var a = stringify({ a: [1, 2] }, { reduce: function (prev, v, k) {
+                for (var i = 0; i < v.length; i++) {
+                    prev.push({ k: k, v: v[i] })
+                }
+                return prev;
+            } })
+            expect(a).to.eql('a=1&a=2');
         })
     });
 });

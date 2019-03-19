@@ -1,5 +1,11 @@
 # 变更日志
 
+## 0.5.0 / 2019-3-19
+
+- feat: parse新增filter和reduce参数
+- feat: stringify新增reduce参数
+- feat: stringify对复杂值序列化由`Object#toString()`改为`String()`
+
 ## 0.4.0 / 2019-3-17
 
 - `parse`新增`convert`参数

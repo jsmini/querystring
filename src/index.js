@@ -12,7 +12,9 @@ export function parse(str, option = {}) {
         eq: '=',
         ignoreQueryPrefix: false,
         decode: decodeURIComponent,
+        filter: (v, k) => true,
         convert: (v, k) => v,
+        reduce: false, // (prev, v, k) => prev
     }, option);
 
     // 处理?，?a=b
@@ -21,7 +23,7 @@ export function parse(str, option = {}) {
         str = arr.length === 2 ? arr[1] : arr[0];
     }
 
-    const res = {};
+    let res = {};
 
     const arr = str.split(opt.sep);
 
@@ -29,34 +31,23 @@ export function parse(str, option = {}) {
 
     for (let i = 0; i < arr.length; i++) {
         const arr2 = arr[i].split(opt.eq);
-
         const k = isDecode ? opt.decode(arr2[0]) : arr2[0];
         const v = isDecode ? opt.decode(arr2[1]) : arr2[1];
 
-        res[k] = opt.convert(v, k);
+        if (opt.filter(v, k)) {
+            if (type(opt.reduce) === 'function') {
+                res = opt.reduce(res, v, k);
+            } else {
+                res[k] = opt.convert(v, k);
+            }
+        }
     }
 
     return res;
 }
 
-function toString(x) {
-    return Object.prototype.toString.call(x);
-
-}
 function hasOwnProp(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-function isPrimitive(x) {
-    const t = type(x);
-    return (
-        t === 'undefined' ||
-        t === 'null' ||
-        t === 'number' ||
-        t === 'string' ||
-        t === 'boolean' ||
-        t === 'symbol'
-    );
 }
 
 export function stringify(obj, option = {}) {
@@ -71,23 +62,28 @@ export function stringify(obj, option = {}) {
         filter: (v, k) => true,
         // undefined or null > ''
         convert: (v, k) => typeof v === 'undefined' || v === null ? '' : v,
+        reduce: false, // (prev, v, k) => prev
     }, option);
 
-    let res = '';
+    let res = [];
 
     const isEncode = type(opt.encode) === 'function';
 
     for (let key in obj) {
         if (hasOwnProp(obj, key) && opt.filter(obj[key], key)) {
-            const val = opt.convert(obj[key], key);
-            const str = isPrimitive(val) ? String(val) : toString(val);
-            
-            const k = isEncode ? opt.encode(key) : key;
-            const v = isEncode ? opt.encode(str) : str;
-
-            res = res + (res === '' ? '' : opt.sep) + k + opt.eq + v;
+            if (type(opt.reduce) === 'function') {
+                res = opt.reduce(res, obj[key], key);
+            } else {                
+                res.push({ k: key, v: String(opt.convert(obj[key], key)) });
+            }
         }
     }
 
-    return res;
+    let str = '';
+    for (let i = 0; i < res.length; i++) {
+        const k = isEncode ? opt.encode(res[i].k) : res[i].k;
+        const v = isEncode ? opt.encode(res[i].v) : res[i].v;
+        str = str + (str === '' ? '' : opt.sep) + k + opt.eq + v;
+    }
+    return str;
 }
