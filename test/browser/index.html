@@ -22,7 +22,7 @@
     <script>
         var libs = {
             'expect.js': expect,
-            '../dist/index.js': jsmini_querystring
+            '../src/index.js': window['jsmini_querystring']
         };
         var require = function(path) {
             return libs[path];

@@ -1,0 +1,9 @@
+{
+    "name": "querystring",
+    "npmname": "@jsmini/querystring",
+    "umdname": "jsmini_querystring",
+    "username": "jsmini",
+    "type": "js",
+    "lang": "zh",
+    "version": "1.4.0"
+}
