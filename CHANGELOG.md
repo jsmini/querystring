@@ -1,5 +1,12 @@
 # 变更日志
 
+## 0.7.0 / 2023-9-24
+
+- 升级最新版 jslib-base
+- 支持 Node.js ESM
+- 升级 @jsmini/type
+- 升级 @jsmini/extend
+
 ## 0.6.2 / 2019-10-10
 
 - fix: 修复丢失d.ts的问题
